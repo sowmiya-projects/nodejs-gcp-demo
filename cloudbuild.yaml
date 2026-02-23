@@ -58,7 +58,4 @@ images:
   - 'us-docker.pkg.dev/$PROJECT_ID/gcr.io/nodejs-gcp-demo:latest'
 
 substitutions:
-  _ZONE: 'us-central1-a'
-
-options:
-  logging: CLOUD_LOGGING_ONL
+  _ZONE: 'us-central1-c'
