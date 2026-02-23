@@ -1,18 +1,15 @@
 steps:
-  # Step 1: Install
   - name: 'node:18-alpine'
     id: 'install'
     entrypoint: npm
     args: ['install']
 
-  # Step 2: Test
   - name: 'node:18-alpine'
     id: 'test'
     entrypoint: npm
     args: ['test']
     waitFor: ['install']
 
-  # Step 3: Build Docker image
   - name: 'gcr.io/cloud-builders/docker'
     id: 'build-image'
     args:
@@ -24,19 +21,16 @@ steps:
       - '.'
     waitFor: ['test']
 
-  # Step 4: Push SHA tag
   - name: 'gcr.io/cloud-builders/docker'
     id: 'push-sha'
     args: ['push', 'us-docker.pkg.dev/$PROJECT_ID/gcr.io/nodejs-gcp-demo:$COMMIT_SHA']
     waitFor: ['build-image']
 
-  # Step 5: Push latest tag
   - name: 'gcr.io/cloud-builders/docker'
     id: 'push-latest'
     args: ['push', 'us-docker.pkg.dev/$PROJECT_ID/gcr.io/nodejs-gcp-demo:latest']
     waitFor: ['build-image']
 
-  # Step 6: Deploy to VM
   - name: 'gcr.io/cloud-builders/gcloud'
     id: 'deploy'
     entrypoint: bash
@@ -67,4 +61,4 @@ substitutions:
   _ZONE: 'us-central1-a'
 
 options:
-  logging: CLOUD_LOGGING_ONLY
+  logging: CLOUD_LOGGING_ONL
